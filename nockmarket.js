@@ -12,7 +12,7 @@ var timeRange = 1000;
 function submitRandomOrder() {
 	// order
 	var ord = nocklib.generateRandomOrder(exchangeData);
-	console.log('order', ord);
+	//console.log('order', ord);
 	if (ord.type == exch.BUY)
 		exchangeData = exch.buy(ord.price, ord.volume, exchangeData);
 	else
@@ -34,7 +34,7 @@ function submitRandomOrder() {
 	function pauseThenTrade() {
 		var pause = Math.floor(Math.random() * timeRange) + timeFloor;
 		setTimeout(submitRandomOrder, pause);
-		console.log(exch.getDisplay(exchangeData));
+		//console.log(exch.getDisplay(exchangeData));
 	}
 }
 
@@ -52,6 +52,8 @@ app.set('view options', {
 });
 
 app.get('/', nockroutes.getIndex);
+
+app.post('/signup', nockroutes.signup);
 
 app.get('/api/trades', function(req, res) {
 	db.find('transactions', {init: {$exists: true}}, 100, function(err, trades) {
