@@ -5,6 +5,7 @@ var exch = require('./lib/exchange');
 var nocklib = require('./lib/nocklib');
 var db = require('./lib/db');
 var express = require('express');
+var nockroutes = require('./routes/nockroutes');
 var timeFloor = 500;
 var timeRange = 1000;
 
@@ -40,6 +41,7 @@ function submitRandomOrder() {
 var app = express.createServer();
 
 app.configure(function() {
+	app.use(express.bodyParser());
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'ejs');
 	app.use(express.static(__dirname + '/public'));
@@ -49,9 +51,7 @@ app.set('view options', {
 	layout: false
 });
 
-app.get('/', function(req, res) {
-	res.render('chart');
-});
+app.get('/', nockroutes.getIndex);
 
 app.get('/api/trades', function(req, res) {
 	db.find('transactions', {init: {$exists: true}}, 100, function(err, trades) {
