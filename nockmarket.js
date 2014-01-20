@@ -52,7 +52,7 @@ app.set('view options', {
 });
 
 app.get('/', nockroutes.getIndex);
-
+app.get('/api/user/:username', nockroutes.getUser);
 app.post('/signup', nockroutes.signup);
 
 app.get('/api/trades', function(req, res) {
